@@ -1,23 +1,8 @@
-# Secrets — never commit real credentials
-.env
-
-# SQLite databases
-*.db
-*.db-journal
-*.sqlite
-*.sqlite3
-
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-env/
-.pytest_cache/
-
 # OS / editor
 .DS_Store
 .idea/
 .vscode/
 *.swp
+
+# Local env (for when the backend is added later)
+.env
