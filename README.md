@@ -83,6 +83,26 @@ app/
 tests/               pytest suite (sentiment, connector parsing, API smoke)
 ```
 
+## Deploy to Render (live website)
+
+This repo includes a `render.yaml` blueprint, so deploying gives you a public
+URL with almost no config.
+
+1. Sign up / log in at https://render.com with your GitHub account.
+2. **New → Blueprint**, pick the `social-listening-tool` repo, and approve.
+   Render reads `render.yaml` and sets up the web service automatically.
+3. Click **Apply / Create**. After ~2–3 minutes you get a public URL like
+   `https://social-listening-tool.onrender.com`.
+
+The keyless sources (**Bluesky, GDELT, Mastodon**) work on the live site with no
+further setup. To enable **Reddit / YouTube / News API**, add their keys as
+environment variables in the Render dashboard (Service → **Environment**).
+
+> **Free-tier notes:** the service sleeps after inactivity (first request after
+> idle takes a few seconds to wake), and the SQLite file lives on an *ephemeral*
+> disk, so stored results reset on restart/redeploy. For persistent storage,
+> add a Render Postgres database (a later upgrade).
+
 ## Tests
 
 ```bash

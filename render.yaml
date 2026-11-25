@@ -1,0 +1,30 @@
+# Render Blueprint — deploys the Social Listening Tool as a web service.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: social-listening-tool
+    runtime: python
+    plan: free
+    # Install dependencies.
+    buildCommand: "pip install -r requirements.txt"
+    # Bind to the port Render assigns via $PORT.
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    # Render pings this path to confirm the app is healthy.
+    healthCheckPath: /api/sources
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      # Store the SQLite file in /tmp (writable on Render's free tier).
+      # NOTE: free-tier disk is ephemeral — data resets on restart/redeploy.
+      - key: DATABASE_PATH
+        value: "/tmp/social_listening.db"
+      # Credentials for keyed sources are set in the Render dashboard, not here.
+      # Keyless sources (Bluesky, GDELT, Mastodon) work without any of these.
+      - key: REDDIT_CLIENT_ID
+        sync: false
+      - key: REDDIT_CLIENT_SECRET
+        sync: false
+      - key: YOUTUBE_API_KEY
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
